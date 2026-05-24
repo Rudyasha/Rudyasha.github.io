@@ -174,11 +174,22 @@
     .hero {
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
       padding: 120px 40px 60px;
       position: relative;
       border-bottom: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
     }
 
     .hero-coords {
@@ -242,6 +253,62 @@
       color: var(--text-dim);
       text-align: right;
       letter-spacing: 0.1em;
+    }
+
+    /* ── CHARACTER IMAGE ── */
+    .hero-char {
+      position: relative;
+      flex: 0 0 380px;
+      height: 520px;
+      overflow: hidden;
+    }
+
+    .hero-char .char-layer {
+      position: absolute;
+      inset: 0;
+      background: url('char.png') bottom center / contain no-repeat;
+      -webkit-mask-image: linear-gradient(to top, transparent 0%, black 25%);
+      mask-image: linear-gradient(to top, transparent 0%, black 25%);
+    }
+
+    .hero-char .char-base {
+      filter: grayscale(0.15) contrast(1.08) brightness(0.92);
+      mix-blend-mode: lighten;
+    }
+
+    .hero-char .char-r {
+      filter: hue-rotate(330deg) saturate(8) brightness(0.55);
+      mix-blend-mode: screen;
+      opacity: 0;
+      animation: char-glitch-r 9s steps(1) infinite;
+    }
+
+    .hero-char .char-b {
+      filter: hue-rotate(190deg) saturate(8) brightness(0.5);
+      mix-blend-mode: screen;
+      opacity: 0;
+      animation: char-glitch-b 9s steps(1) infinite 0.06s;
+    }
+
+    @keyframes char-glitch-r {
+      0%, 78%, 100% { opacity: 0; transform: translate(0,0); clip-path: none; }
+      79%  { opacity: 0.7; transform: translate(-5px,0); clip-path: inset(20% 0 55% 0); }
+      80%  { opacity: 0.6; transform: translate(-5px,0); clip-path: inset(58% 0 12% 0); }
+      81%  { opacity: 0.4; transform: translate(-3px,0); clip-path: inset(38% 0 35% 0); }
+      82%  { opacity: 0; clip-path: none; }
+    }
+
+    @keyframes char-glitch-b {
+      0%, 78%, 100% { opacity: 0; transform: translate(0,0); clip-path: none; }
+      79%  { opacity: 0.6; transform: translate(5px,0); clip-path: inset(20% 0 55% 0); }
+      80%  { opacity: 0.5; transform: translate(5px,0); clip-path: inset(58% 0 12% 0); }
+      81%  { opacity: 0.3; transform: translate(3px,0); clip-path: inset(38% 0 35% 0); }
+      82%  { opacity: 0; clip-path: none; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-char { display: none; }
+      .hero { flex-direction: column; align-items: flex-start; }
     }
 
     /* ── SECTIONS ── */
@@ -602,21 +669,29 @@
 
   <!-- ── HERO ── -->
   <section class="hero" id="home">
-    <div class="hero-coords">[ 40.4168° N, 3.7038° W ] // SPAIN // UTC+1</div>
+    <div class="hero-content">
+      <div class="hero-coords">[ 40.4168° N, 3.7038° W ] // SPAIN // UTC+1</div>
 
-    <h1 class="hero-name glitch" data-text="Uliana Tarasova">
-      <em>Uliana</em><br>Tarasova
-    </h1>
+      <h1 class="hero-name glitch" data-text="Uliana Tarasova">
+        <em>Uliana</em><br>Tarasova
+      </h1>
 
-    <div class="hero-title">
-      <span>QA Engineer</span> // API &amp; Integrations // 6+ years
+      <div class="hero-title">
+        <span>QA Engineer</span> // API &amp; Integrations // 6+ years
+      </div>
+
+      <div class="hero-meta">
+        <a href="mailto:rudymakemesohappy@gmail.com">rudymakemesohappy@gmail.com</a>
+        <a href="https://t.me/everythingsucksforever">@everythingsucksforever</a>
+        <span>+34 633 514 235</span>
+        <span>Fully remote</span>
+      </div>
     </div>
 
-    <div class="hero-meta">
-      <a href="mailto:rudymakemesohappy@gmail.com">rudymakemesohappy@gmail.com</a>
-      <a href="https://t.me/everythingsucksforever">@everythingsucksforever</a>
-      <span>+34 633 514 235</span>
-      <span>Fully remote</span>
+    <div class="hero-char">
+      <div class="char-layer char-base"></div>
+      <div class="char-layer char-r"></div>
+      <div class="char-layer char-b"></div>
     </div>
 
     <div class="hero-corner">
@@ -923,7 +998,7 @@
 
     const mouse = { x: -200, y: -200 };
     const trail = [];
-    const TRAIL_LEN = 55;
+    const TRAIL_LEN = 18;
 
     document.addEventListener('mousemove', e => {
       mouse.x = e.clientX;
@@ -959,39 +1034,6 @@
 
     function loop() {
       ctx.clearRect(0, 0, W, H);
-
-      // draw trail points
-      for (let i = 0; i < trail.length; i++) {
-        const p = trail[i];
-        const progress = i / TRAIL_LEN; // 0=oldest 1=newest
-        const alpha = progress * 0.75;
-        const size = 1 + progress * 2.5;
-
-        // occasional glitch: horizontal smear in cyan or red
-        if (Math.random() < 0.06 && progress < 0.6) {
-          const glitchW = 6 + Math.random() * 18;
-          const offsetX = (Math.random() - 0.5) * 10;
-          const color = Math.random() < 0.5
-            ? `rgba(160,220,235,${alpha * 0.7})`
-            : `rgba(220,150,155,${alpha * 0.7})`;
-          ctx.fillStyle = color;
-          ctx.fillRect(p.x + offsetX - glitchW/2, p.y, glitchW, 1);
-        }
-
-        // occasional displaced ghost block
-        if (Math.random() < 0.04 && progress < 0.45) {
-          ctx.fillStyle = `rgba(200,200,170,${alpha * 0.3})`;
-          ctx.fillRect(
-            p.x + (Math.random()-0.5)*14,
-            p.y + (Math.random()-0.5)*4,
-            Math.random()*8 + 2, 1
-          );
-        }
-
-        // main trail pixel
-        ctx.fillStyle = `rgba(210,207,190,${alpha})`;
-        ctx.fillRect(p.x - size/2, p.y - size/2, size, size);
-      }
 
       // draw cursor on top
       drawCursor(mouse.x, mouse.y);
