@@ -868,7 +868,7 @@
       .edu-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
-      #win-field { display: none; }
+      .glitch-win { width: 160px; font-size: 9px; }
     }
   </style>
 </head>
@@ -1235,8 +1235,9 @@
       const d = winData[Math.floor(Math.random() * winData.length)];
       const w = document.createElement('div');
       w.className = 'glitch-win';
-      w.style.left = (30 + Math.random() * 40) + '%';
-      w.style.top  = (5  + Math.random() * 55) + '%';
+      const isMob = window.innerWidth < 700;
+      w.style.left = (isMob ? 5  + Math.random() * 45 : 30 + Math.random() * 40) + '%';
+      w.style.top  = (isMob ? 5  + Math.random() * 40 : 5  + Math.random() * 55) + '%';
       w.innerHTML = `
         <div class="gw-title">
           <span>${d.title}</span>
