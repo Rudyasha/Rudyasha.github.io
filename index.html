@@ -867,7 +867,7 @@
   <section class="hero" id="home">
     <div id="win-field"></div>
     <div class="hero-content">
-      <div class="hero-coords">[ 40.4168° N, 3.7038° W ] // SPAIN // UTC+1</div>
+      <div class="hero-coords">[ 40.4168° N, 3.7038° W ] // SPAIN // <span id="hero-utc">UTC+1</span></div>
 
       <h1 class="hero-name glitch" data-text="Uliana Tarasova">
         <em>Uliana</em><br>Tarasova
@@ -1160,6 +1160,7 @@
       const offset = now.toLocaleString('en', { timeZone: 'Europe/Madrid', timeZoneName: 'shortOffset' })
         .split('GMT')[1] || '';
       document.getElementById('ts').textContent = spain + ' (UTC' + offset + ')';
+      document.getElementById('hero-utc').textContent = 'UTC' + offset;
     }
     updateTs();
     setInterval(updateTs, 1000);
