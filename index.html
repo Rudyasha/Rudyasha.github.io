@@ -676,40 +676,31 @@
     .cert-source { color: var(--text-dim); font-size: 10px; letter-spacing: 0.1em; }
 
     /* ── CONTACT ── */
-    .contact-list {
+    .contact-links {
       display: flex;
       flex-direction: column;
+      gap: 0;
     }
 
-    .contact-row {
-      padding: 24px 0;
+    .contact-link {
+      display: block;
+      padding: 20px 0;
       border-bottom: 1px solid var(--border);
-    }
-
-    .contact-row:last-child { border-bottom: none; }
-
-    .contact-label {
-      font-size: 10px;
-      letter-spacing: 0.2em;
+      font-size: 11px;
+      letter-spacing: 0.3em;
       color: var(--text-dim);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .contact-val {
-      font-family: var(--serif);
-      font-size: 26px;
-      font-weight: 300;
-      color: var(--text-bright);
-    }
-
-    .contact-val a {
-      color: inherit;
       text-decoration: none;
+      text-transform: uppercase;
+      position: relative;
       transition: color 0.2s;
     }
 
-    .contact-val a:hover { color: var(--accent); }
+    .contact-link:last-child { border-bottom: none; }
+
+    .contact-link::before { content: '[ '; }
+    .contact-link::after  { content: ' ]'; }
+
+    .contact-link:hover { color: var(--text-bright); }
 
     /* ── GLITCH BUTTON ── */
     .glitch-btn {
@@ -1172,25 +1163,10 @@
       <div class="section-line"></div>
     </div>
 
-    <div class="contact-list">
-      <div class="contact-row">
-        <div class="contact-label">Email</div>
-        <div class="contact-val">
-          <a href="mailto:rudymakemesohappy@gmail.com">rudymakemesohappy@gmail.com</a>
-        </div>
-      </div>
-      <div class="contact-row">
-        <div class="contact-label">Telegram</div>
-        <div class="contact-val">
-          <a href="https://t.me/everythingsucksforever">@everythingsucksforever</a>
-        </div>
-      </div>
-      <div class="contact-row">
-        <div class="contact-label">LinkedIn</div>
-        <div class="contact-val">
-          <a href="https://www.linkedin.com/in/ulyana-tarasova/" target="_blank">ulyana-tarasova</a>
-        </div>
-      </div>
+    <div class="contact-links">
+      <a href="mailto:rudymakemesohappy@gmail.com" class="contact-link">EMAIL</a>
+      <a href="https://t.me/everythingsucksforever" class="contact-link" target="_blank">TELEGRAM</a>
+      <a href="https://www.linkedin.com/in/ulyana-tarasova/" class="contact-link" target="_blank">LINKEDIN</a>
     </div>
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-top:24px;flex-wrap:wrap;gap:16px;">
