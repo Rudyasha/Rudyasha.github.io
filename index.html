@@ -270,7 +270,12 @@
       font-size: 10px;
       color: var(--text-dim);
       animation: win-in 0.25s steps(2) forwards;
+      pointer-events: auto;
+      user-select: none;
     }
+
+    .gw-title { cursor: grab; }
+    .gw-title:active { cursor: grabbing; }
 
     .glitch-win.closing {
       animation: win-out 0.3s steps(2) forwards;
@@ -735,6 +740,7 @@
       .edu-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
+      #win-field { display: none; }
     }
   </style>
 </head>
@@ -1093,6 +1099,28 @@
         <div class="gw-body">${d.body.replace(/\n/g,'<br>')}${d.progress ? '<div class="gw-progress"></div>' : ''}</div>
       `;
       winField.appendChild(w);
+
+      // drag logic
+      const titleBar = w.querySelector('.gw-title');
+      titleBar.addEventListener('mousedown', e => {
+        e.preventDefault();
+        const rect = w.getBoundingClientRect();
+        const field = winField.getBoundingClientRect();
+        let ox = e.clientX - rect.left, oy = e.clientY - rect.top;
+        w.style.zIndex = 10;
+
+        function onMove(e) {
+          w.style.left = (e.clientX - field.left - ox) + 'px';
+          w.style.top  = (e.clientY - field.top  - oy) + 'px';
+        }
+        function onUp() {
+          w.style.zIndex = '';
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+        }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
 
       const life = 2500 + Math.random() * 3500;
       setTimeout(() => {
