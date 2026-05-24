@@ -1236,8 +1236,8 @@
       const w = document.createElement('div');
       w.className = 'glitch-win';
       const isMob = window.innerWidth < 700;
-      w.style.left = (isMob ? 5  + Math.random() * 45 : 30 + Math.random() * 40) + '%';
-      w.style.top  = (isMob ? 5  + Math.random() * 40 : 5  + Math.random() * 55) + '%';
+      w.style.left = (isMob ? 3  + Math.random() * 40 : 30 + Math.random() * 40) + '%';
+      w.style.top  = (isMob ? 2  + Math.random() * 28 : 5  + Math.random() * 55) + '%';
       w.innerHTML = `
         <div class="gw-title">
           <span>${d.title}</span>
@@ -1280,8 +1280,9 @@
       }, life);
     }
 
+    const maxWins = window.innerWidth < 700 ? 2 : 4;
     (function loop() {
-      if (document.querySelectorAll('.glitch-win').length < 4) spawnWin();
+      if (document.querySelectorAll('.glitch-win').length < maxWins) spawnWin();
       setTimeout(loop, 900 + Math.random() * 1800);
     })();
     setTimeout(spawnWin, 100);
