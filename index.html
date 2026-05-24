@@ -746,6 +746,13 @@
       100%{ transform: translate(0,0);   filter: none; }
     }
 
+    .contact-glitch-phrase {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--text-dim);
+    }
+
     /* ── FOOTER ── */
     footer {
       padding: 32px 40px;
@@ -1104,13 +1111,12 @@
           <a href="https://t.me/everythingsucksforever">@everythingsucksforever</a>
         </div>
       </div>
-      <div class="contact-item">
-        <div class="contact-label">Location</div>
-        <div class="contact-val">Spain // Fully Remote</div>
-      </div>
     </div>
 
-    <a href="mailto:rudymakemesohappy@gmail.com" class="glitch-btn glitch" data-text="[ INITIATE CONTACT ]">[ INITIATE CONTACT ]</a>
+    <div style="display:flex;align-items:center;gap:48px;margin-top:24px;flex-wrap:wrap;">
+      <a href="mailto:rudymakemesohappy@gmail.com" class="glitch-btn glitch" data-text="[ INITIATE CONTACT ]" style="margin-top:0;">[ INITIATE CONTACT ]</a>
+      <div class="glitch contact-glitch-phrase" data-text="HAVE_A_NICE_DAY">HAVE_A_NICE_DAY<span class="cursor"></span></div>
+    </div>
   </section>
 
   <!-- ── FOOTER ── -->
