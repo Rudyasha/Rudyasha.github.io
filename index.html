@@ -65,6 +65,12 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border-bright); }
 
+    /* ── TEXT SELECTION ── */
+    ::selection {
+      background: rgba(212, 208, 180, 0.28);
+      color: var(--text-bright);
+    }
+
     /* ── NAV ── */
     nav {
       position: fixed;
@@ -1240,8 +1246,22 @@
       const w = document.createElement('div');
       w.className = 'glitch-win';
       const isMob = window.innerWidth < 700;
-      w.style.left = (isMob ? 3  + Math.random() * 40 : 30 + Math.random() * 40) + '%';
-      w.style.top  = (isMob ? 2  + Math.random() * 28 : 5  + Math.random() * 55) + '%';
+      if (isMob) {
+        // Dynamically find safe zone above the coords text
+        const coords = document.querySelector('.hero-coords');
+        const fieldRect = winField.getBoundingClientRect();
+        const coordsTop = coords
+          ? coords.getBoundingClientRect().top - fieldRect.top
+          : fieldRect.height * 0.38;
+        const approxWinH = 78; // approximate window height px
+        const safeH = Math.max(0, coordsTop - approxWinH);
+        const safePct = (safeH / fieldRect.height) * 100;
+        w.style.left = (3 + Math.random() * 40) + '%';
+        w.style.top  = (safePct > 3 ? Math.random() * safePct : 1) + '%';
+      } else {
+        w.style.left = (30 + Math.random() * 40) + '%';
+        w.style.top  = (5  + Math.random() * 55) + '%';
+      }
       w.innerHTML = `
         <div class="gw-title">
           <span>${d.title}</span>
