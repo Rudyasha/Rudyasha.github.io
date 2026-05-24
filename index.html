@@ -77,6 +77,10 @@
       background: rgba(10,10,8,0.92);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: transform;
     }
 
     .nav-logo {
