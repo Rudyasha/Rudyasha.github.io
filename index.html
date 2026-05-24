@@ -250,6 +250,90 @@
       letter-spacing: 0.1em;
     }
 
+    /* ── GLITCH WINDOWS ── */
+    #win-field {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .glitch-win {
+      position: absolute;
+      width: 210px;
+      background: rgba(8,8,6,0.88);
+      border: 1px solid var(--border-bright);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-dim);
+      animation: win-in 0.25s steps(2) forwards;
+    }
+
+    .glitch-win.closing {
+      animation: win-out 0.3s steps(2) forwards;
+    }
+
+    @keyframes win-in {
+      0%   { opacity: 0; clip-path: inset(50% 0 50% 0); transform: translateX(-3px); }
+      50%  { opacity: 0.6; clip-path: inset(15% 0 15% 0); }
+      100% { opacity: 1; clip-path: inset(0% 0 0% 0); transform: translateX(0); }
+    }
+
+    @keyframes win-out {
+      0%   { opacity: 1; clip-path: inset(0% 0 0% 0); }
+      50%  { opacity: 0.4; clip-path: inset(30% 0 30% 0); transform: translateX(4px); }
+      100% { opacity: 0; clip-path: inset(50% 0 50% 0); }
+    }
+
+    .gw-title {
+      background: var(--border-bright);
+      padding: 5px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 0.1em;
+      color: var(--text);
+    }
+
+    .gw-btns { display: flex; gap: 4px; }
+
+    .gw-btn {
+      width: 10px; height: 10px;
+      border: 1px solid var(--text-dim);
+      font-size: 8px; line-height: 10px;
+      text-align: center; color: var(--text-dim);
+    }
+
+    .gw-body {
+      padding: 10px 12px;
+      line-height: 1.9;
+      letter-spacing: 0.05em;
+    }
+
+    .gw-progress {
+      margin-top: 6px;
+      height: 2px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gw-progress::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; height: 100%;
+      background: var(--text-dim);
+      animation: progress-fill 2s linear forwards;
+    }
+
+    @keyframes progress-fill {
+      from { width: 0%; }
+      to   { width: 100%; }
+    }
+
     /* ── CHARACTER IMAGE ── */
     .hero-char {
       position: relative;
@@ -670,6 +754,7 @@
 
   <!-- ── HERO ── -->
   <section class="hero" id="home">
+    <div id="win-field"></div>
     <div class="hero-content">
       <div class="hero-coords">[ 40.4168° N, 3.7038° W ] // SPAIN // UTC+1</div>
 
@@ -973,6 +1058,55 @@
     }
     updateTs();
     setInterval(updateTs, 1000);
+
+    // ── GLITCH WINDOWS ──
+    const winField = document.getElementById('win-field');
+
+    const winData = [
+      { title: 'SYSTEM_ERROR', body: 'Memory allocation failed.\nProcess 0x4A2F terminated.', progress: false },
+      { title: 'WARNING', body: 'Unidentified signal detected.\nInitiating scan...', progress: true },
+      { title: 'ACCESS_LOG', body: 'User: TARASOVA_U\nClearance: LEVEL_3\nStatus: ACTIVE', progress: false },
+      { title: 'DIAGNOSTIC', body: 'CPU: 94%  MEM: 2.1GB\nNET: ENCRYPTED\nUPTIME: 847h', progress: false },
+      { title: 'CONNECTION', body: 'Peer: 92.168.1.██\nPort: 443\nStatus: ESTABLISHED', progress: false },
+      { title: 'CORRUPTION', body: 'Sector 0x7FFF damaged.\nData recovery in progress...', progress: true },
+      { title: 'SCAN_RESULT', body: 'Anomaly at 0x00AF.\nClassification: UNKNOWN', progress: false },
+      { title: 'ALERT', body: 'Firewall breach detected.\nBlocking: 10.0.0.███', progress: false },
+      { title: 'QUEUE', body: 'Tasks pending: 12\nActive threads: 4\nETA: 00:02:33', progress: true },
+      { title: 'INTEGRITY_CHECK', body: 'Verifying checksums...\n[████░░░░░░] 41%', progress: true },
+    ];
+
+    function spawnWin() {
+      const d = winData[Math.floor(Math.random() * winData.length)];
+      const w = document.createElement('div');
+      w.className = 'glitch-win';
+      w.style.left = (30 + Math.random() * 60) + '%';
+      w.style.top  = (5  + Math.random() * 75) + '%';
+      w.innerHTML = `
+        <div class="gw-title">
+          <span>${d.title}</span>
+          <div class="gw-btns">
+            <div class="gw-btn"></div>
+            <div class="gw-btn"></div>
+            <div class="gw-btn">×</div>
+          </div>
+        </div>
+        <div class="gw-body">${d.body.replace(/\n/g,'<br>')}${d.progress ? '<div class="gw-progress"></div>' : ''}</div>
+      `;
+      winField.appendChild(w);
+
+      const life = 2500 + Math.random() * 3500;
+      setTimeout(() => {
+        w.classList.add('closing');
+        setTimeout(() => w.remove(), 350);
+      }, life);
+    }
+
+    (function loop() {
+      if (document.querySelectorAll('.glitch-win').length < 4) spawnWin();
+      setTimeout(loop, 900 + Math.random() * 1800);
+    })();
+    setTimeout(spawnWin, 100);
+    setTimeout(spawnWin, 500);
 
     // ── CHARACTER BG REMOVAL ──
     // Removes dark grey background from char.png via pixel processing
