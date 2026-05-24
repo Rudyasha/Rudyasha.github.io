@@ -751,6 +751,37 @@
       font-size: 11px;
       letter-spacing: 0.25em;
       color: var(--text-dim);
+      position: relative;
+      animation: phrase-loop 4s steps(1) infinite;
+    }
+
+    .contact-glitch-phrase::before,
+    .contact-glitch-phrase::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+    }
+
+    .contact-glitch-phrase::before { color: #a8d8ea; }
+    .contact-glitch-phrase::after  { color: #d4a8aa; }
+
+    @keyframes phrase-loop {
+      0%, 100%   { opacity: 1; transform: translate(0,0); }
+      /* disappear */
+      18%  { opacity: 0; }
+      22%  { opacity: 1; }
+      /* glitch burst */
+      55%  { opacity: 1; transform: translate(0,0); }
+      56%  { opacity: 0.3; transform: translate(-4px, 0); clip-path: inset(20% 0 50% 0); }
+      57%  { opacity: 0.6; transform: translate(3px, 0);  clip-path: inset(55% 0 10% 0); }
+      58%  { opacity: 0;   transform: translate(0,0);     clip-path: none; }
+      62%  { opacity: 0; }
+      63%  { opacity: 1; transform: translate(0,0); }
+      /* channel split */
+      80%  { opacity: 1; }
+      81%  { opacity: 0.2; }
+      82%  { opacity: 1; }
     }
 
     /* ── FOOTER ── */
@@ -1113,7 +1144,7 @@
       </div>
     </div>
 
-    <div style="display:flex;align-items:center;gap:48px;margin-top:24px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:24px;flex-wrap:wrap;gap:16px;">
       <a href="mailto:rudymakemesohappy@gmail.com" class="glitch-btn glitch" data-text="[ INITIATE CONTACT ]" style="margin-top:0;">[ INITIATE CONTACT ]</a>
       <div class="glitch contact-glitch-phrase" data-text="HAVE_A_NICE_DAY">HAVE_A_NICE_DAY<span class="cursor"></span></div>
     </div>
