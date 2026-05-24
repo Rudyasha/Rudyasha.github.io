@@ -323,7 +323,7 @@
 
     .glitch-win {
       position: absolute;
-      width: 210px;
+      width: 250px;
       background: rgba(8,8,6,0.88);
       border: 1px solid var(--border-bright);
       font-family: var(--mono);
@@ -1168,8 +1168,8 @@
       const d = winData[Math.floor(Math.random() * winData.length)];
       const w = document.createElement('div');
       w.className = 'glitch-win';
-      w.style.left = (30 + Math.random() * 60) + '%';
-      w.style.top  = (5  + Math.random() * 75) + '%';
+      w.style.left = (30 + Math.random() * 40) + '%';
+      w.style.top  = (5  + Math.random() * 55) + '%';
       w.innerHTML = `
         <div class="gw-title">
           <span>${d.title}</span>
