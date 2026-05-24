@@ -822,8 +822,10 @@
       50% { opacity: 0; }
     }
 
-    /* hide default cursor everywhere */
-    *, a, button { cursor: none !important; }
+    /* hide default cursor only on non-touch devices */
+    @media (pointer: fine) {
+      *, a, button { cursor: none !important; }
+    }
 
     @media (max-width: 700px) {
       nav { padding: 14px 20px; }
@@ -1296,7 +1298,8 @@
       }, 3000 + Math.random() * 4000);
     });
 
-    // ── GLITCH CURSOR TRAIL ──
+    // ── GLITCH CURSOR TRAIL ── (desktop only)
+    if (!window.matchMedia('(pointer: coarse)').matches) {
     const cvs = document.createElement('canvas');
     cvs.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:99997;';
     document.body.appendChild(cvs);
@@ -1352,6 +1355,7 @@
     }
 
     loop();
+    } // end pointer: fine check
   </script>
 </body>
 </html>
