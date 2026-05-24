@@ -822,8 +822,8 @@
       50% { opacity: 0; }
     }
 
-    /* hide default cursor only on non-touch devices */
-    @media (pointer: fine) {
+    /* hide default cursor only on true mouse devices */
+    @media (hover: hover) and (pointer: fine) {
       *, a, button { cursor: none !important; }
     }
 
@@ -1303,7 +1303,10 @@
     });
 
     // ── GLITCH CURSOR TRAIL ── (desktop only)
-    if (!window.matchMedia('(pointer: coarse)').matches) {
+    const isTouch = window.matchMedia('(pointer: coarse)').matches
+      || 'ontouchstart' in window
+      || navigator.maxTouchPoints > 0;
+    if (!isTouch) {
     const cvs = document.createElement('canvas');
     cvs.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:99997;';
     document.body.appendChild(cvs);
