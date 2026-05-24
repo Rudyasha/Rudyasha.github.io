@@ -981,6 +981,43 @@
     updateTs();
     setInterval(updateTs, 1000);
 
+    // ── CHARACTER BG REMOVAL ──
+    // Removes dark grey background from char.png via pixel processing
+    function processCharImage() {
+      const img = new Image();
+      img.src = 'char.png';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const c = canvas.getContext('2d');
+        c.drawImage(img, 0, 0);
+
+        const d = c.getImageData(0, 0, canvas.width, canvas.height);
+        const px = d.data;
+
+        for (let i = 0; i < px.length; i += 4) {
+          const r = px[i], g = px[i+1], b = px[i+2];
+          const avg = (r + g + b) / 3;
+          const sat = Math.max(r, g, b) - Math.min(r, g, b);
+
+          if (avg < 50 && sat < 22) {
+            px[i+3] = 0; // fully transparent
+          } else if (avg < 85 && sat < 30) {
+            // smooth fade-out for medium dark greys
+            px[i+3] = Math.floor(((avg - 50) / 35) * px[i+3]);
+          }
+        }
+
+        c.putImageData(d, 0, 0);
+        const url = canvas.toDataURL('image/png');
+        document.querySelectorAll('.hero-char .char-layer').forEach(el => {
+          el.style.backgroundImage = `url('${url}')`;
+        });
+      };
+    }
+    processCharImage();
+
     // Random glitch trigger on glitch elements every few seconds
     document.querySelectorAll('.glitch').forEach(el => {
       setInterval(() => {
