@@ -250,6 +250,66 @@
       letter-spacing: 0.1em;
     }
 
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 4px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: var(--text-dim);
+      transition: transform 0.25s, opacity 0.25s, background 0.25s;
+    }
+
+    .hamburger.open span { background: var(--text-bright); }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,8,0.97);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
+
+    .nav-overlay a {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-overlay a::before { content: '[ '; }
+    .nav-overlay a::after  { content: ' ]'; }
+    .nav-overlay a:hover   { color: var(--text-bright); }
+
+    @media (max-width: 900px) {
+      .nav-links  { display: none; }
+      .hamburger  { display: flex; }
+    }
+
     /* ── GLITCH WINDOWS ── */
     #win-field {
       position: absolute;
@@ -756,7 +816,18 @@
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <button class="hamburger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="nav-overlay" id="nav-overlay">
+    <a href="#about"      class="ol-link">About</a>
+    <a href="#skills"     class="ol-link">Skills</a>
+    <a href="#experience" class="ol-link">Experience</a>
+    <a href="#education"  class="ol-link">Education</a>
+    <a href="#contact"    class="ol-link">Contact</a>
+  </div>
 
   <!-- ── HERO ── -->
   <section class="hero" id="home">
@@ -1064,6 +1135,18 @@
     }
     updateTs();
     setInterval(updateTs, 1000);
+
+    // ── HAMBURGER ──
+    const burger = document.getElementById('burger');
+    const overlay = document.getElementById('nav-overlay');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      overlay.classList.toggle('open');
+    });
+    document.querySelectorAll('.ol-link').forEach(l => l.addEventListener('click', () => {
+      burger.classList.remove('open');
+      overlay.classList.remove('open');
+    }));
 
     // ── GLITCH WINDOWS ──
     const winField = document.getElementById('win-field');
