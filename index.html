@@ -678,24 +678,20 @@
     /* ── CONTACT ── */
     .contact-links {
       display: flex;
-      flex-direction: column;
-      gap: 0;
+      flex-direction: row;
+      justify-content: center;
+      gap: 48px;
+      padding: 20px 0;
     }
 
     .contact-link {
-      display: block;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
       font-size: 11px;
       letter-spacing: 0.3em;
       color: var(--text-dim);
       text-decoration: none;
       text-transform: uppercase;
-      position: relative;
       transition: color 0.2s;
     }
-
-    .contact-link:last-child { border-bottom: none; }
 
     .contact-link::before { content: '[ '; }
     .contact-link::after  { content: ' ]'; }
