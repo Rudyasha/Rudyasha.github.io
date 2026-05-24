@@ -676,30 +676,29 @@
     .cert-source { color: var(--text-dim); font-size: 10px; letter-spacing: 0.1em; }
 
     /* ── CONTACT ── */
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      border: 1px solid var(--border);
+    .contact-list {
+      display: flex;
+      flex-direction: column;
     }
 
-    .contact-item {
-      padding: 28px 32px;
-      border-right: 1px solid var(--border);
+    .contact-row {
+      padding: 24px 0;
       border-bottom: 1px solid var(--border);
     }
 
+    .contact-row:last-child { border-bottom: none; }
+
     .contact-label {
-      font-size: 9px;
-      letter-spacing: 0.25em;
+      font-size: 10px;
+      letter-spacing: 0.2em;
       color: var(--text-dim);
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .contact-val {
       font-family: var(--serif);
-      font-size: 20px;
+      font-size: 26px;
       font-weight: 300;
       color: var(--text-bright);
     }
@@ -1173,17 +1172,23 @@
       <div class="section-line"></div>
     </div>
 
-    <div class="contact-grid">
-      <div class="contact-item">
+    <div class="contact-list">
+      <div class="contact-row">
         <div class="contact-label">Email</div>
         <div class="contact-val">
           <a href="mailto:rudymakemesohappy@gmail.com">rudymakemesohappy@gmail.com</a>
         </div>
       </div>
-      <div class="contact-item">
+      <div class="contact-row">
         <div class="contact-label">Telegram</div>
         <div class="contact-val">
           <a href="https://t.me/everythingsucksforever">@everythingsucksforever</a>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-val">
+          <a href="https://www.linkedin.com/in/ulyana-tarasova/" target="_blank">ulyana-tarasova</a>
         </div>
       </div>
     </div>
