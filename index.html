@@ -267,8 +267,14 @@
       position: absolute;
       inset: 0;
       background: url('char.png') bottom center / contain no-repeat;
-      -webkit-mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, black 40%, transparent 100%);
-      mask-image: radial-gradient(ellipse 80% 85% at 50% 45%, black 40%, transparent 100%);
+      -webkit-mask-image:
+        linear-gradient(to right,  transparent 0%, black 18%, black 82%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 10%, black 82%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to right,  transparent 0%, black 18%, black 82%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 10%, black 82%, transparent 100%);
+      mask-composite: intersect;
     }
 
     .hero-char .char-base {
