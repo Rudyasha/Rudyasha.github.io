@@ -965,8 +965,10 @@
     // Live timestamp in footer
     function updateTs() {
       const now = new Date();
-      document.getElementById('ts').textContent =
-        now.toISOString().replace('T',' ').slice(0,19) + ' UTC';
+      const spain = now.toLocaleString('sv-SE', { timeZone: 'Europe/Madrid' });
+      const offset = now.toLocaleString('en', { timeZone: 'Europe/Madrid', timeZoneName: 'shortOffset' })
+        .split('GMT')[1] || '';
+      document.getElementById('ts').textContent = spain + ' (UTC' + offset + ')';
     }
     updateTs();
     setInterval(updateTs, 1000);
