@@ -1304,13 +1304,21 @@
       }, life);
     }
 
-    const maxWins = window.innerWidth < 700 ? 2 : 4;
-    (function loop() {
+    const maxWins = window.innerWidth < 700 ? 1 : 4;
+    const isMobSpawn = window.innerWidth < 700;
+
+    function trySpawn() {
       if (document.querySelectorAll('.glitch-win').length < maxWins) spawnWin();
-      setTimeout(loop, 900 + Math.random() * 1800);
+    }
+
+    (function loop() {
+      trySpawn();
+      setTimeout(loop, isMobSpawn
+        ? 3500 + Math.random() * 4000
+        : 900  + Math.random() * 1800);
     })();
-    setTimeout(spawnWin, 100);
-    setTimeout(spawnWin, 500);
+    setTimeout(trySpawn, 300);
+    if (!isMobSpawn) setTimeout(trySpawn, 700);
 
     // ── CHARACTER BG REMOVAL ──
     // Removes dark grey background from char.png via pixel processing
