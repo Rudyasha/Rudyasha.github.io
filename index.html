@@ -184,18 +184,18 @@
     }
 
     /* ── NEW GLITCH CYCLE (hero name only) ── */
-    .hero-name .glitch:hover {
+    .hero-name:hover .glitch {
       animation: glitch-jitter 3s steps(1) infinite,
                  glitch-color  3s linear   infinite;
     }
 
-    .hero-name .glitch:hover::before {
+    .hero-name:hover .glitch::before {
       color: #5ce8ff;
       opacity: 0;
       animation: glitch-hero-1 3s steps(1) infinite;
     }
 
-    .hero-name .glitch:hover::after {
+    .hero-name:hover .glitch::after {
       color: #ff4f4f;
       opacity: 0;
       animation: glitch-hero-2 3s steps(1) infinite 0.05s;
