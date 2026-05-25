@@ -152,13 +152,15 @@
       opacity: 0;
     }
 
-    .glitch:hover::before {
+    .glitch:hover::before,
+    .hero-name:hover .glitch::before {
       color: #a8d8ea;
       opacity: 0.7;
       animation: glitch-1 0.4s steps(1) forwards;
     }
 
-    .glitch:hover::after {
+    .glitch:hover::after,
+    .hero-name:hover .glitch::after {
       color: #d4a8aa;
       opacity: 0.7;
       animation: glitch-2 0.4s steps(1) forwards;
@@ -909,8 +911,9 @@
     <div class="hero-content">
       <div class="hero-coords">[ 40.4168° N, 3.7038° W ] // SPAIN // <span id="hero-utc">UTC+1</span></div>
 
-      <h1 class="hero-name glitch" data-text="Uliana Tarasova">
-        <em>Uliana</em><br>Tarasova
+      <h1 class="hero-name">
+        <em class="glitch" data-text="Uliana">Uliana</em><br>
+        <span class="glitch" data-text="Tarasova">Tarasova</span>
       </h1>
 
       <div class="hero-title">
