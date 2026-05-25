@@ -1239,8 +1239,11 @@
         w.style.left = (3 + Math.random() * 40) + '%';
         w.style.top  = (safePct > 3 ? Math.random() * safePct : 1) + '%';
       } else {
+        const navH = document.querySelector('nav').offsetHeight;
+        const fieldH = winField.offsetHeight;
+        const minTop = ((navH + 20) / fieldH) * 100;
         w.style.left = (30 + Math.random() * 40) + '%';
-        w.style.top  = (5  + Math.random() * 55) + '%';
+        w.style.top  = (minTop + Math.random() * (72 - minTop)) + '%';
       }
       w.innerHTML = `
         <div class="gw-title">
