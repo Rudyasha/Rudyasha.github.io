@@ -1245,11 +1245,17 @@
         w.style.left = (3 + Math.random() * 40) + '%';
         w.style.top  = (safePct > 3 ? Math.random() * safePct : 1) + '%';
       } else {
-        const navH = document.querySelector('nav').offsetHeight;
-        const fieldH = winField.offsetHeight;
-        const minTop = ((navH + 20) / fieldH) * 100;
+        const navH    = document.querySelector('nav').offsetHeight;
+        const titleEl = document.querySelector('.hero-title');
+        const fieldRect = winField.getBoundingClientRect();
+        const fieldH  = fieldRect.height;
+        const minTop  = ((navH + 20) / fieldH) * 100;
+        const titleTop = titleEl
+          ? ((titleEl.getBoundingClientRect().top - fieldRect.top - 90) / fieldH) * 100
+          : 72;
+        const maxTop = Math.max(minTop + 5, titleTop);
         w.style.left = (30 + Math.random() * 40) + '%';
-        w.style.top  = (minTop + Math.random() * (72 - minTop)) + '%';
+        w.style.top  = (minTop + Math.random() * (maxTop - minTop)) + '%';
       }
       w.innerHTML = `
         <div class="gw-title">
